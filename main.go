@@ -6,11 +6,11 @@ import (
 	"os"
 
 	"github.com/Alohadancemeow/go-sekai-shop-demo/config"
+	database "github.com/Alohadancemeow/go-sekai-shop-demo/pkg/database/script"
 )
 
 func main() {
 	ctx := context.Background()
-	_ = ctx
 
 	// Initialize config
 	cfg := config.LoadConfig(func() string {
@@ -20,12 +20,12 @@ func main() {
 		return os.Args[1]
 	}())
 
-	log.Println(cfg)
-
 	// Database connection
-	// db := database.DbConn(ctx, &cfg)
-	// defer db.Disconnect(ctx)
+	db := database.DbConn(ctx, &cfg)
+	log.Println(db)
+	defer db.Disconnect(ctx)
 
-	// // Start Server
+
+	// Start Server
 	// server.Start(ctx, &cfg, db)
 }
